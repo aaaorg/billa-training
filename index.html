@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#cc1517">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BILLA trenažér">
+  <title>BILLA pokladní trenažér</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main id="app" class="app"></main>
+
+  <!-- vrstvy pro zpětnou vazbu a modaly -->
+  <div id="overlay" class="overlay"></div>
+  <div id="overlay-stack"></div>
+  <div id="toast" class="toast"></div>
+
+  <!-- pořadí načítání je důležité -->
+  <script src="js/money.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/games/change.js"></script>
+  <script src="js/games/rounding.js"></script>
+  <script src="js/games/till.js"></script>
+  <script src="js/games/scenarios.js"></script>
+  <script src="js/games/pos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

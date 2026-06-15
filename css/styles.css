@@ -1,0 +1,311 @@
+/* =========================================================================
+   BILLA pokladní trenažér — styly (mobile-first, responzivní, PWA)
+   ========================================================================= */
+:root {
+  --billa-red: #cc1517;
+  --billa-red-dark: #a01012;
+  --billa-yellow: #ffd400;
+  --ink: #1d1f23;
+  --muted: #7b818b;
+  --line: #e6e8ec;
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --good: #1f9d55;
+  --bad: #d63a3a;
+  --radius: 16px;
+  --shadow: 0 2px 10px rgba(20, 22, 28, .07), 0 1px 3px rgba(20, 22, 28, .06);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-size: 16px; line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+h2 { margin: 0; font-size: 1.3rem; }
+b { font-weight: 700; }
+
+.app { max-width: 860px; margin: 0 auto; padding: 14px 14px calc(28px + var(--safe-b)); }
+
+/* ---------- domovská obrazovka ---------- */
+.home-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 4px 16px; }
+.logo { display: flex; flex-direction: column; line-height: 1; }
+.logo-billa {
+  background: var(--billa-yellow); color: var(--billa-red);
+  font-weight: 900; font-size: 1.9rem; letter-spacing: .5px;
+  padding: 4px 10px; border-radius: 8px; align-self: flex-start;
+}
+.logo-sub { color: var(--muted); font-size: .85rem; margin-top: 6px; padding-left: 2px; }
+.gear { font-size: 1.5rem; width: 46px; height: 46px; border-radius: 50%; background: var(--card); box-shadow: var(--shadow); }
+
+.score-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+.score-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 8px; text-align: center; }
+.score-num { font-size: 1.7rem; font-weight: 800; color: var(--billa-red); }
+.score-lab { font-size: .78rem; color: var(--muted); }
+
+.mode-list { display: flex; flex-direction: column; gap: 12px; }
+.mode-card {
+  display: flex; align-items: center; gap: 14px; text-align: left;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 16px; transition: transform .08s;
+}
+.mode-card:active { transform: scale(.985); }
+.mode-icon { font-size: 2rem; width: 52px; height: 52px; display: grid; place-items: center; background: #fff4f4; border-radius: 14px; flex: none; }
+.mode-body { flex: 1; min-width: 0; }
+.mode-title { font-weight: 700; font-size: 1.08rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mode-tag { background: var(--billa-red); color: #fff; font-size: .6rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; letter-spacing: .5px; }
+.mode-desc { color: var(--muted); font-size: .9rem; margin-top: 2px; }
+.mode-meta { color: var(--billa-red); font-weight: 800; font-size: 1.1rem; flex: none; }
+.home-foot { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 22px; line-height: 1.55; }
+
+/* ---------- hlavička obrazovky ---------- */
+.scr-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.back-btn { background: var(--card); box-shadow: var(--shadow); border-radius: 12px; padding: 10px 14px; font-weight: 700; color: var(--billa-red); flex: none; }
+.scr-title h2 { font-size: 1.25rem; }
+.scr-title p { margin: 2px 0 0; color: var(--muted); font-size: .85rem; }
+
+/* ---------- herní lišta ---------- */
+.play-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.diff-picker { display: inline-flex; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+.diff { padding: 9px 14px; font-size: .85rem; font-weight: 700; color: var(--muted); }
+.diff.active { background: var(--billa-red); color: #fff; }
+.streak { font-weight: 800; font-size: 1.05rem; background: var(--card); padding: 8px 14px; border-radius: 12px; box-shadow: var(--shadow); }
+.streak-num { color: var(--billa-red); }
+.hint-chip { background: #fff8d9; color: #8a6d00; font-weight: 600; font-size: .82rem; padding: 8px 12px; border-radius: 10px; }
+
+/* ---------- karta ---------- */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+.stage { display: flex; flex-direction: column; gap: 14px; }
+
+/* zadání ve hře vracení */
+.deal { background: #faf7f0; border: 1px solid #efe7d6; border-radius: 14px; padding: 14px; }
+.deal-line { display: flex; justify-content: space-between; align-items: baseline; padding: 3px 0; }
+.deal-line.small { font-size: .85rem; color: var(--muted); }
+.deal-lab { color: var(--muted); }
+.deal-val { font-weight: 800; font-size: 1.25rem; }
+.deal-val.accent { color: var(--billa-red); }
+.deal-tender { margin-top: 8px; }
+
+/* displej pokladny (LCD) */
+.register { margin-bottom: 2px; }
+.reg-screen { background: #10231b; color: #7cfc9a; border-radius: 12px; padding: 14px 16px; font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace; box-shadow: inset 0 2px 10px rgba(0,0,0,.55); }
+.reg-row { display: flex; justify-content: space-between; align-items: baseline; letter-spacing: 1px; }
+.reg-row > span:first-child { font-size: .78rem; opacity: .7; }
+.reg-due { font-size: 1.8rem; font-weight: 800; }
+.reg-row.change { margin-top: 10px; padding-top: 8px; border-top: 1px dashed rgba(124,252,154,.3); color: #ffd400; }
+.reg-change { font-size: 2.1rem; font-weight: 900; }
+
+/* hrst hotovosti od zákazníka */
+.pile-label { font-weight: 700; }
+.pile { background: #faf7f0; border: 1px solid #efe7d6; border-radius: 12px; padding: 14px; display: flex; justify-content: center; }
+
+.q { font-size: 1.15rem; font-weight: 700; }
+.q.center { text-align: center; }
+.q.small { font-size: .95rem; font-weight: 600; color: var(--muted); }
+.center { text-align: center; }
+.muted { color: var(--muted); }
+.pad { padding: 22px 0; }
+
+.big-input {
+  background: #f1f3f6; border: 2px solid var(--line); border-radius: 14px;
+  text-align: center; font-size: 2rem; font-weight: 800; padding: 16px;
+  letter-spacing: .5px; color: var(--ink);
+}
+
+/* ---------- numerická klávesnice ---------- */
+.numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.key {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  font-size: 1.6rem; font-weight: 700; padding: 16px 0; box-shadow: var(--shadow);
+  transition: transform .06s, background .1s;
+}
+.key:active { transform: scale(.95); background: #eef0f3; }
+.key-enter { background: var(--good); color: #fff; border-color: var(--good); }
+.key-back { background: #fbeaea; color: var(--bad); }
+
+/* ---------- nominály (reálné obrázky bankovek a mincí) ---------- */
+.denom-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.denom { position: relative; flex: none; user-select: none; line-height: 0; }
+.denom.clickable { cursor: pointer; transition: transform .08s; }
+.denom.clickable:active { transform: scale(.92); }
+/* měřítko: výška/velikost se řídí font-size obalu */
+.denom.sm { font-size: 12px; }
+.denom.md { font-size: 17px; }
+.denom.lg { font-size: 22px; }
+
+/* bankovky – šířka se řídí poměrem stran obrázku (vyšší hodnota = širší note) */
+.note { display: inline-block; border-radius: .22em; overflow: hidden; box-shadow: -1px 1px 4px rgba(0,0,0,.32); }
+.note-img { display: block; height: 3.05em; width: auto; }
+
+/* mince – kruh, velikost roste s hodnotou */
+.coin { display: inline-block; border-radius: 50%; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.35); background: #e9ebee; }
+.coin-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.coin.cs1 { width: 2.5em; height: 2.5em; } .coin.cs2 { width: 2.75em; height: 2.75em; }
+.coin.cs3 { width: 3.0em; height: 3.0em; } .coin.cs4 { width: 3.25em; height: 3.25em; }
+.coin.cs5 { width: 3.5em; height: 3.5em; } .coin.cs6 { width: 3.8em; height: 3.8em; }
+
+.denom-count {
+  position: absolute; top: -7px; right: -7px; background: var(--ink); color: #fff;
+  font-size: .68rem; padding: 1px 5px; border-radius: 9px; font-weight: 800; z-index: 3; line-height: 1.3;
+}
+
+/* hrst jednotlivých kusů – seskupené po nominálu a překryté jako vějíř (spočitatelné) */
+.pile-stack { display: flex; flex-wrap: wrap; gap: 12px 20px; justify-content: center; align-items: center; }
+.stack { position: relative; display: flex; }
+.stack.notes > .denom + .denom { margin-left: -2.9em; }
+.stack.coins > .denom + .denom { margin-left: -0.9em; }
+
+/* skládání drobných */
+.built { min-height: 56px; background: #f1f3f6; border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.built-sum { font-weight: 700; color: var(--muted); }
+.built-sum.ok { color: var(--good); }
+.built-sum.over { color: var(--bad); }
+.palette { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 6px 0; }
+.build-actions { display: flex; gap: 10px; }
+
+/* ---------- tlačítka ---------- */
+.btn { border-radius: 14px; padding: 14px 16px; font-weight: 700; font-size: 1rem; box-shadow: var(--shadow); transition: transform .07s, filter .1s; }
+.btn:active { transform: scale(.97); }
+.btn.primary { background: var(--billa-red); color: #fff; }
+.btn.ghost { background: var(--card); border: 1px solid var(--line); }
+.btn.big { width: 100%; padding: 16px; font-size: 1.1rem; }
+.btn.danger { background: #fbeaea; color: var(--bad); width: 100%; margin-top: 8px; }
+.build-actions .btn { flex: 1; }
+
+/* ---------- velká zpětná vazba ---------- */
+.overlay { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity .15s; z-index: 60; }
+.overlay.show { opacity: 1; }
+.fb { background: rgba(20,22,28,.92); color: #fff; border-radius: 22px; padding: 26px 30px; text-align: center; max-width: 88vw; box-shadow: 0 10px 40px rgba(0,0,0,.3); transform: scale(.9); animation: pop .2s ease forwards; }
+@keyframes pop { to { transform: scale(1); } }
+.fb-icon { font-size: 3.2rem; font-weight: 900; line-height: 1; }
+.fb-ok .fb-icon { color: #4ade80; }
+.fb-no .fb-icon { color: #ff7676; }
+.fb-msg { font-size: 1.3rem; font-weight: 800; margin-top: 8px; }
+.fb-sub { font-size: .92rem; opacity: .85; margin-top: 6px; }
+
+/* ---------- toast ---------- */
+.toast { position: fixed; left: 50%; bottom: calc(24px + var(--safe-b)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 600; opacity: 0; pointer-events: none; transition: all .2s; z-index: 70; max-width: 90vw; text-align: center; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- konec kola ---------- */
+.done { display: flex; gap: 14px; align-items: center; background: #f1f3f6; border-radius: 14px; padding: 16px; }
+.done.ok { background: #eafaf0; }
+.done.no { background: #fdeeee; }
+.done-ico { font-size: 2.4rem; }
+.mini-lab { color: var(--muted); font-size: .82rem; margin: 8px 0 4px; }
+
+/* ---------- zaokrouhlování ---------- */
+.pay-badge { text-align: center; font-weight: 800; padding: 10px; border-radius: 12px; }
+.pay-badge.cash { background: #eafaf0; color: var(--good); }
+.pay-badge.card { background: #eaf1fb; color: #2563c4; }
+.choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.choices.vertical { grid-template-columns: 1fr; }
+.choice { background: var(--card); border: 2px solid var(--line); font-size: 1.2rem; }
+.choice.wide { font-size: 1rem; text-align: left; }
+.choice.good { background: #eafaf0; border-color: var(--good); color: var(--good); }
+.choice.bad { background: #fdeeee; border-color: var(--bad); color: var(--bad); }
+.choice:disabled { opacity: .55; }
+
+/* ---------- počítání zásuvky ---------- */
+.till-grid { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; padding: 8px 0 4px; }
+.till-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.till-x { font-weight: 800; color: var(--muted); }
+
+/* ---------- situace ---------- */
+.explain { border-radius: 12px; padding: 14px; margin-top: 6px; }
+.explain.ok { background: #eafaf0; }
+.explain.no { background: #fff5e6; }
+.explain-head { font-weight: 800; margin-bottom: 4px; }
+
+/* ---------- nastavení ---------- */
+.set-row { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px; border-bottom: 1px solid var(--line); text-align: left; }
+.set-row.static { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.set-lab { font-weight: 700; }
+.set-sub { color: var(--muted); font-size: .82rem; }
+.switch { width: 50px; height: 30px; background: var(--line); border-radius: 16px; position: relative; transition: background .15s; flex: none; }
+.set-row.on .switch { background: var(--good); }
+.knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .15s; }
+.set-row.on .knob { left: 23px; }
+
+/* ---------- plná pokladna ---------- */
+.pos { display: flex; flex-direction: column; gap: 14px; }
+.pos-left, .pos-right { min-width: 0; }
+.receipt-head { display: flex; justify-content: space-between; align-items: center; font-weight: 800; margin-bottom: 8px; }
+.mini-btn { background: #fff4f4; color: var(--billa-red); font-weight: 700; padding: 6px 10px; border-radius: 9px; font-size: .8rem; }
+.receipt { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 8px; min-height: 90px; }
+.rline { display: flex; align-items: center; gap: 8px; padding: 8px 6px; border-bottom: 1px dashed var(--line); }
+.rline:last-child { border-bottom: none; }
+.rline-main { flex: 1; min-width: 0; }
+.rline-name { font-weight: 600; font-size: .95rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.rline-desc { color: var(--muted); font-size: .8rem; }
+.rline-tot { font-weight: 800; white-space: nowrap; }
+.rline-btns { display: flex; gap: 4px; flex: none; }
+.lbtn { width: 30px; height: 30px; border-radius: 8px; background: #f1f3f6; font-weight: 800; font-size: 1.1rem; }
+.lbtn.x { background: #fbeaea; color: var(--bad); }
+.mini-age { background: var(--bad); color: #fff; font-size: .6rem; font-weight: 800; padding: 1px 5px; border-radius: 5px; }
+.mini-dep { background: #e6f0ff; color: #2563c4; font-size: .65rem; font-weight: 700; padding: 1px 5px; border-radius: 5px; }
+
+.totals { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; margin-top: 12px; }
+.trow { display: flex; justify-content: space-between; padding: 4px 0; color: var(--muted); }
+.trow.disc { color: var(--good); }
+.trow.grand { font-size: 1.3rem; font-weight: 800; color: var(--ink); border-top: 2px solid var(--line); margin-top: 6px; padding-top: 10px; }
+.trow.cashrow { font-weight: 700; color: var(--billa-red); }
+
+.prod-grid { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px; }
+.cat-label { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin: 10px 2px 6px; }
+.cat-label:first-child { margin-top: 2px; }
+.cat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.prod { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; background: #f7f8fa; border: 1px solid var(--line); border-radius: 12px; padding: 10px 6px; text-align: center; transition: transform .07s; }
+.prod:active { transform: scale(.95); }
+.prod.age { border-color: #f3c4c4; }
+.prod-emoji { font-size: 1.6rem; }
+.prod-name { font-size: .76rem; font-weight: 600; line-height: 1.15; }
+.prod-price { font-size: .72rem; color: var(--muted); font-weight: 700; }
+.badge-age { position: absolute; top: 4px; right: 4px; background: var(--bad); color: #fff; font-size: .58rem; font-weight: 800; padding: 1px 4px; border-radius: 5px; }
+.badge-dep { position: absolute; top: 4px; left: 4px; background: #e6f0ff; color: #2563c4; font-size: .58rem; font-weight: 700; padding: 1px 4px; border-radius: 5px; }
+
+.pos-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.btn.klub { background: #fff8d9; color: #8a6d00; }
+.btn.klub.on { background: var(--billa-yellow); color: var(--billa-red); }
+.btn.pay { grid-column: 1 / -1; background: var(--billa-red); color: #fff; font-size: 1.15rem; }
+
+/* ---------- modaly ---------- */
+.modal-back { position: fixed; inset: 0; background: rgba(20,22,28,.45); display: grid; place-items: end center; opacity: 0; transition: opacity .2s; z-index: 50; padding: 0; }
+.modal-back.show { opacity: 1; }
+.modal { background: var(--card); width: 100%; max-width: 480px; border-radius: 22px 22px 0 0; padding: 20px 18px calc(24px + var(--safe-b)); box-shadow: 0 -6px 30px rgba(0,0,0,.2); transform: translateY(40px); transition: transform .22s; display: flex; flex-direction: column; gap: 12px; max-height: 92vh; overflow-y: auto; }
+.modal-back.show .modal { transform: translateY(0); }
+.modal-title { font-size: 1.2rem; font-weight: 800; text-align: center; }
+.weight-price { text-align: center; font-size: 1.4rem; font-weight: 800; color: var(--billa-red); }
+
+.age-face { font-size: 3.5rem; text-align: center; }
+.age-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.good-btn { background: #eafaf0; color: var(--good); border: 2px solid var(--good); }
+.bad-btn { background: #fdeeee; color: var(--bad); border: 2px solid var(--bad); }
+
+.pay-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pay-choice .btn { display: flex; flex-direction: column; gap: 4px; padding: 22px 10px; font-size: 1.15rem; }
+.pay-choice .btn small { font-weight: 600; opacity: .8; font-size: .72rem; }
+.pay-cash { background: #eafaf0; color: var(--good); }
+.pay-card { background: #eaf1fb; color: #2563c4; }
+
+.terminal { background: #1d1f23; color: #fff; border-radius: 14px; padding: 24px; text-align: center; }
+.term-amt { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+.term-status { font-size: 1.1rem; font-weight: 700; opacity: .9; }
+.term-status.approved { color: #4ade80; }
+.term-status.declined { color: #ff7676; }
+.sum-receipt { background: #f1f3f6; border-radius: 12px; padding: 14px; }
+
+/* ---------- desktop / široké obrazovky ---------- */
+@media (min-width: 720px) {
+  .pos { flex-direction: row-reverse; align-items: flex-start; }
+  .pos-right { flex: 1.4; }
+  .pos-left { flex: 1; position: sticky; top: 14px; }
+  .totals { margin-top: 12px; }
+  .modal-back { place-items: center; padding: 20px; }
+  .modal { border-radius: 22px; transform: translateY(0) scale(.94); }
+  .modal-back.show .modal { transform: scale(1); }
+}
