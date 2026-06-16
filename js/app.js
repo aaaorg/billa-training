@@ -17,6 +17,8 @@
 
   function go(name) {
     window.scrollTo(0, 0);
+    // herní obrazovky jedou ve „play" layoutu (vejdou se na výšku displeje bez scrollování)
+    root.classList.toggle('play', name !== 'home' && name !== 'settings');
     if (name === 'home') return home();
     if (name === 'settings') return settings();
     const g = games[name];

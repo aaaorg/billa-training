@@ -81,6 +81,7 @@
     function showIntro() {
       round = null;
       ui.clear(card);
+      card.className = 'card stage';
       card.appendChild(h('div', { class: 'intro' },
         h('div', { class: 'intro-ico' }, ui.icon('shopping_cart')),
         h('h3', { class: 'intro-title' }, 'Směna začíná'),
@@ -121,6 +122,7 @@
     /* --- krok 1: spočítej přijatou hotovost --- */
     function drawCount() {
       ui.clear(card);
+      card.className = 'card stage count-fit';
       round.stage = 'count';
       const mode = store.settings.inputMode || 'row';
       card.appendChild(registerPanel());
@@ -143,31 +145,40 @@
       }));
     }
 
-    /* --- režim Hrst: rozházené kusy, odsouváš je po jednom --- */
+    /* --- režim Hrst: hotovost rozházená přes CELOU obrazovku (overlay) --- */
     function drawFist() {
       const pieces = round.cust.pieces.slice();
-      const hint = h('div', { class: 'fist-hint' },
-        'Odsuň každý kus pryč a počítej v hlavě · zbývá ', h('b', { class: 'fist-left' }, String(pieces.length)));
-      const area = h('div', { class: 'fist-area' });
-      card.appendChild(hint);
-      card.appendChild(area);
-      const leftEl = hint.querySelector('.fist-left');
+      if (!pieces.length) { countInput(); return; }
+      card.appendChild(h('div', { class: 'q small center muted' }, 'Převezmi hotovost na obrazovce…'));
+
+      const back = h('div', { class: 'fist-overlay' });
+      const head = h('div', { class: 'fist-overlay-head' },
+        h('div', { class: 'fist-due' }, 'K úhradě ', h('b', null, money.formatKc(round.cust.total))),
+        h('div', { class: 'fist-tip' }, 'Odsuň každý kus pryč a počítej · zbývá ', h('b', { class: 'fist-left' }, String(pieces.length))));
+      const layer = h('div', { class: 'fist-layer' });
+      back.appendChild(head); back.appendChild(layer);
+      document.getElementById('overlay-stack').appendChild(back);
+      requestAnimationFrame(function () { back.classList.add('show'); });
+      const leftEl = head.querySelector('.fist-left');
       let remaining = pieces.length;
-      if (!remaining) { countInput(); return; }
 
       pieces.forEach(function (d, i) {
-        const el = ui.denomEl(d, { size: 'md' });
+        const el = ui.denomEl(d, { size: 'lg' });
         el.classList.add('fist-piece');
-        el.style.left = (8 + Math.random() * 62).toFixed(1) + '%';
-        el.style.top = (6 + Math.random() * 56).toFixed(1) + '%';
-        el.style.setProperty('--rot', (Math.random() * 40 - 20).toFixed(1) + 'deg');
+        el.style.left = (5 + Math.random() * 78).toFixed(1) + '%';
+        el.style.top = (14 + Math.random() * 72).toFixed(1) + '%';
+        el.style.setProperty('--rot', (Math.random() * 50 - 25).toFixed(1) + 'deg');
         el.style.zIndex = String(10 + i);
         el.style.touchAction = 'none';
         makeSwipable(el, function () {
           remaining--; leftEl.textContent = String(remaining); ui.sound('coin');
-          if (remaining <= 0) { area.classList.add('cleared'); countInput(); }
+          if (remaining <= 0) {
+            back.classList.remove('show');
+            setTimeout(function () { back.remove(); }, 260);
+            countInput();
+          }
         });
-        area.appendChild(el);
+        layer.appendChild(el);
       });
     }
 
@@ -224,6 +235,7 @@
     /* --- krok 2: odpočítej drobné ZE ŠUPLÍKU --- */
     function drawGive() {
       ui.clear(card);
+      card.className = 'card stage';
       const change = round.cust.change;
       maxChange = Math.max(maxChange, change);
 
@@ -367,6 +379,7 @@
       sk.lessonsDone = (sk.lessonsDone || 0) + 1;
       store.save();
       ui.clear(card);
+      card.className = 'card stage';
 
       const stars = correctCount >= LEN ? 3 : correctCount >= Math.ceil(LEN * 0.75) ? 2 : 1;
       let weak = null, wn = 0;
