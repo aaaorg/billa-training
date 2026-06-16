@@ -1,5 +1,7 @@
 # BILLA – pokladní trenažér 🛒
 
+> 🌐 **Živá verze: https://billa.disketa.eu** — nasazuje se automaticky z větve `main` přes Cloudflare Pages.
+
 Webová appka (běží na PC i mobilu, funguje offline), kde se dá natrénovat
 práce na pokladně – hlavně **vracení a počítání peněz**, aby z toho nevznikalo manko.
 
