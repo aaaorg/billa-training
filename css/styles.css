@@ -457,6 +457,75 @@ b, strong { font-weight: 800; }
 .term-status.declined { color: #ff7676; opacity: 1; }
 .sum-receipt { background: var(--surface-sunken); border-radius: var(--radius-md); padding: 14px; }
 
+/* ===========================================================================
+   REFACTOR modulu „Vracení peněz" — lekce, režim Hrst, šuplík, souhrn
+   =========================================================================== */
+
+/* mini XP proužek v přehledové dlaždici na domovské */
+.xp-mini { height: 4px; background: var(--grey-200); border-radius: var(--radius-pill); margin-top: 8px; overflow: hidden; }
+.xp-mini-fill { height: 100%; background: var(--billa-green); border-radius: inherit; transition: width .4s ease; }
+
+/* ---------- lišta lekce ---------- */
+.lesson-bar { align-items: center; }
+.lesson-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.lesson-right { display: flex; align-items: center; gap: 8px; }
+.lvl-chip { background: var(--green-50); color: var(--billa-green); font-weight: 800; font-size: .8rem; padding: 6px 10px; border-radius: var(--radius-pill); white-space: nowrap; }
+.lesson-dots { display: flex; gap: 5px; flex-wrap: wrap; }
+.ldot { width: 9px; height: 9px; border-radius: 50%; background: var(--grey-300); transition: background .2s, transform .2s; }
+.ldot.done { background: var(--billa-green); }
+.ldot.now { background: var(--billa-yellow); transform: scale(1.35); box-shadow: 0 0 0 3px var(--yellow-50); }
+.mode-toggle { display: inline-flex; align-items: center; gap: 6px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 8px 12px; font-weight: 800; font-size: .85rem; color: var(--text-strong); box-shadow: var(--shadow-sm); }
+.mode-toggle .material-symbols-rounded { color: var(--billa-green); }
+
+/* ---------- úvod / souhrn lekce ---------- */
+.intro, .summary { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 6px 0; }
+.intro-ico { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--billa-green); color: #fff; }
+.intro-ico .material-symbols-rounded { font-size: 34px; }
+.intro-title { margin: 0; font-size: 1.3rem; font-weight: 900; color: var(--text-strong); }
+.intro-sub { margin: 0; color: var(--text-muted); font-size: .92rem; }
+.intro-tips { display: flex; flex-direction: column; gap: 8px; width: 100%; text-align: left; margin: 4px 0; }
+.tip { display: flex; align-items: center; gap: 10px; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px 12px; font-size: .9rem; color: var(--text-body); }
+.tip .material-symbols-rounded { color: var(--billa-green); flex: none; }
+.intro .btn.big, .sum-actions { width: 100%; }
+
+/* ---------- režim Hrst (rozházená hotovost) ---------- */
+.fist-hint { display: flex; align-items: center; gap: 6px; justify-content: center; color: var(--text-muted); font-size: .9rem; font-weight: 600; }
+.fist-hint .material-symbols-rounded { color: var(--billa-green); }
+.fist-area { position: relative; width: 100%; min-height: 250px; background: var(--surface-sunken); border: 1px dashed var(--border-default); border-radius: var(--radius-md); overflow: hidden; touch-action: pan-y; }
+.fist-area.cleared { display: none; }
+.fist-piece { position: absolute; transform: rotate(var(--rot, 0deg)); cursor: grab; will-change: transform; filter: drop-shadow(0 2px 5px rgba(0,0,0,.28)); }
+.fist-piece:active { cursor: grabbing; }
+
+/* ---------- šuplík (paleta s dostupnými kusy) ---------- */
+.tray-label { display: flex; align-items: center; gap: 6px; font-weight: 800; color: var(--text-strong); font-size: .9rem; }
+.tray-label .material-symbols-rounded { color: var(--billa-green); }
+.drawer-tray { display: flex; flex-wrap: wrap; gap: 12px 14px; justify-content: center; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px; }
+.tray-slot { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.tray-slot.empty { opacity: .32; filter: grayscale(1); }
+.tray-count { font-weight: 800; font-size: .82rem; color: var(--text-muted); }
+.tray-slot.empty .tray-count { color: var(--red-error); }
+.btn.manager { width: 100%; color: var(--billa-green); border-color: var(--green-100); }
+.btn.manager .material-symbols-rounded { color: var(--billa-green); }
+.btn.manager.urge { background: var(--yellow-50); border-color: var(--billa-yellow); color: var(--grey-900); animation: urge 1.1s ease-in-out infinite; }
+.btn.manager.urge .material-symbols-rounded { color: var(--orange-warning); }
+@keyframes urge { 0%,100% { box-shadow: 0 0 0 0 rgba(232,130,30,.0); } 50% { box-shadow: 0 0 0 4px rgba(232,130,30,.22); } }
+
+/* ---------- souhrn lekce ---------- */
+.sum-stars { font-size: 2rem; color: var(--billa-yellow); letter-spacing: 4px; text-shadow: 0 1px 0 var(--billa-yellow-darker); }
+.sum-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+.sum-stat { background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 6px; }
+.sum-num { font-size: 1.5rem; font-weight: 900; color: var(--billa-green); }
+.sum-lab { font-size: .76rem; color: var(--text-muted); font-weight: 600; }
+.sum-line { font-size: .92rem; color: var(--text-body); width: 100%; }
+.sum-line.muted { color: var(--text-muted); }
+.prog-bar { width: 100%; height: 10px; background: var(--grey-200); border-radius: var(--radius-pill); overflow: hidden; }
+.prog-fill { height: 100%; border-radius: inherit; transition: width .5s ease; }
+.prog-bar.xp .prog-fill { background: var(--billa-yellow); }
+.prog-bar.mastery .prog-fill { background: var(--billa-green); }
+.sum-tip { display: flex; align-items: center; gap: 8px; background: var(--yellow-50); border: 1px solid var(--yellow-100); border-radius: var(--radius-md); padding: 10px 12px; font-size: .88rem; color: var(--grey-700); text-align: left; }
+.sum-tip .material-symbols-rounded { color: var(--orange-warning); flex: none; }
+.sum-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+
 /* ---------- desktop / široké obrazovky ---------- */
 @media (min-width: 720px) {
   .pos { flex-direction: row-reverse; align-items: flex-start; }

@@ -1,5 +1,5 @@
 /* Service worker — offline cache (app shell) */
-const CACHE = 'billa-trener-v4';
+const CACHE = 'billa-trener-v5';
 const ASSETS = [
   './',
   'index.html',
@@ -13,6 +13,8 @@ const ASSETS = [
   'js/icons.js',
   'js/storage.js',
   'js/ui.js',
+  'js/engine/difficulty.js',
+  'js/engine/drawer.js',
   'js/games/change.js',
   'js/games/rounding.js',
   'js/games/till.js',

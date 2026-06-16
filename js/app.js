@@ -34,12 +34,16 @@
       h('button', { class: 'gear', 'aria-label': 'Nastavení', onclick: function () { go('settings'); } }, ui.icon('settings'))
     ));
 
-    // přehled bodů
+    // přehled postupu: level + XP + nejdelší série
+    const lp = store.levelProgress();
+    const xpPct = lp.maxed ? 100 : Math.round(lp.into / lp.span * 100);
     root.appendChild(h('div', { class: 'score-strip' },
-      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(s.points)), h('div', { class: 'score-lab' }, 'bodů')),
+      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(store.level())), h('div', { class: 'score-lab' }, 'level')),
+      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(store.xp)),
+        h('div', { class: 'score-lab' }, 'XP'),
+        h('div', { class: 'xp-mini' }, h('div', { class: 'xp-mini-fill', style: { width: xpPct + '%' } }))),
       h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(bestStreakAll())),
-        h('div', { class: 'score-lab' }, 'série ', ui.icon('local_fire_department', { size: 15, fill: true }))),
-      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, totalPlays() + '×'), h('div', { class: 'score-lab' }, 'zahráno'))
+        h('div', { class: 'score-lab' }, 'série ', ui.icon('local_fire_department', { size: 15, fill: true })))
     ));
 
     const list = h('div', { class: 'mode-list' });
@@ -65,12 +69,10 @@
     Object.keys(store.state.stats).forEach(function (k) {
       m = Math.max(m, store.state.stats[k].bestStreak || 0);
     });
+    Object.keys(store.state.skills).forEach(function (k) {
+      m = Math.max(m, store.state.skills[k].bestStreak || 0);
+    });
     return m;
-  }
-  function totalPlays() {
-    let n = 0;
-    Object.keys(store.state.stats).forEach(function (k) { n += store.state.stats[k].plays || 0; });
-    return n;
   }
 
   function settings() {
@@ -89,12 +91,31 @@
       return btn;
     }
 
+    function modeSeg() {
+      const seg = h('div', { class: 'diff-picker' });
+      [['row', 'Řádek'], ['fist', 'Hrst']].forEach(function (m) {
+        seg.appendChild(h('button', {
+          class: 'diff ' + (st.inputMode === m[0] ? 'active' : ''),
+          onclick: function () {
+            st.inputMode = m[0]; store.save();
+            seg.querySelectorAll('.diff').forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+          }
+        }, m[1]));
+      });
+      return seg;
+    }
+
     const card = h('div', { class: 'card' },
       toggle('Zvuky', 'sound'),
       toggle('Vibrace', 'haptics'),
-      toggle('Skládat drobné', 'buildStep', 'U vracení peněz i krok „naskládej mince"'),
       h('div', { class: 'set-row static' },
-        h('div', { class: 'set-lab' }, 'Výchozí obtížnost'),
+        h('div', { class: 'set-lab' }, 'Počítání přijaté hotovosti'),
+        h('div', { class: 'set-sub' }, 'Řádek = srovnané kusy · Hrst = odsouváš je po jednom'),
+        modeSeg()),
+      h('div', { class: 'set-row static' },
+        h('div', { class: 'set-lab' }, 'Výchozí obtížnost (strop)'),
+        h('div', { class: 'set-sub' }, 'Uvnitř se obtížnost sama přizpůsobí tomu, jak ti to jde'),
         ui.difficultyPicker(null)),
       h('button', { class: 'btn danger', onclick: function () {
         if (confirm('Opravdu smazat veškerý postup a body?')) { store.reset(); ui.toast('Postup smazán'); go('settings'); }
