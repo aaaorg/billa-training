@@ -133,8 +133,17 @@
 
   // registrace service workeru pro offline (jen přes http/https)
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    // jakmile převezme řízení nová verze SW, jednou obnov stránku (= aktuální verze i na mobilu)
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () {});
+      navigator.serviceWorker.register('sw.js').then(function (reg) {
+        if (reg.update) { try { reg.update(); } catch (e) {} }
+      }).catch(function () {});
     });
   }
 

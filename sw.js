@@ -1,5 +1,5 @@
 /* Service worker — offline cache (app shell) */
-const CACHE = 'billa-trener-v5';
+const CACHE = 'billa-trener-v6';
 const ASSETS = [
   './',
   'index.html',
@@ -45,15 +45,32 @@ self.addEventListener('activate', function (e) {
   }).then(function () { return self.clients.claim(); }));
 });
 
+// Kód appky (HTML/JS/CSS + navigace) = NETWORK-FIRST: online vždy aktuální verze,
+// offline elegantně spadne na cache. Obrázky/fonty/ostatní = cache-first (rychlost, data).
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.match(e.request).then(function (hit) {
-      return hit || fetch(e.request).then(function (res) {
+  const url = new URL(e.request.url);
+  const isShell = e.request.mode === 'navigate' || /\.(html|js|css)$/.test(url.pathname);
+
+  if (isShell) {
+    e.respondWith(
+      fetch(e.request).then(function (res) {
         const copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(e.request, copy); }).catch(function () {});
         return res;
-      }).catch(function () { return caches.match('index.html'); });
-    })
-  );
+      }).catch(function () {
+        return caches.match(e.request).then(function (hit) { return hit || caches.match('index.html'); });
+      })
+    );
+  } else {
+    e.respondWith(
+      caches.match(e.request).then(function (hit) {
+        return hit || fetch(e.request).then(function (res) {
+          const copy = res.clone();
+          caches.open(CACHE).then(function (c) { c.put(e.request, copy); }).catch(function () {});
+          return res;
+        }).catch(function () { return undefined; });
+      })
+    );
+  }
 });
