@@ -8,14 +8,13 @@ Thumbs.db
 __pycache__/
 *.pyc
 
-# tajné – NIKDY necommitovat
-.cf_billa.token
+# secrets
 *.token
 *.secret
 .env
 .env.*
 
-# dočasné
+# temporary files
 assets/money/raw/
 dist/
 *.log

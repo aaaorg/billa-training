@@ -24,7 +24,8 @@
     const stat = store.modeStats(MODE);
     root.appendChild(h('div', { class: 'play-bar' },
       h('div', { class: 'hint-chip' }, 'Vyber správný postup'),
-      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)), ' 🔥')
+      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)),
+        ui.icon('local_fire_department', { fill: true, cls: 'streak-fire' }))
     ));
 
     const card = h('div', { class: 'card stage' });
@@ -63,7 +64,7 @@
       updateStreak();
       ui.sound(ok ? 'correct' : 'wrong');
       card.appendChild(h('div', { class: 'explain ' + (ok ? 'ok' : 'no') },
-        h('div', { class: 'explain-head' }, ok ? '✓ Správně' : '✗ Pozor'),
+        h('div', { class: 'explain-head' }, ui.icon(ok ? 'check_circle' : 'warning'), ok ? 'Správně' : 'Pozor'),
         h('div', null, q.explain)
       ));
       card.appendChild(h('button', { class: 'btn primary big', onclick: next }, 'Další situace →'));

@@ -37,6 +37,19 @@
 
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
+  /* ---- ikona (vložené SVG Material Symbols Rounded — funguje i offline) ---- */
+  // opts: { size:Number|String, cls:String }
+  const ICONS = BILLA.icons || {};
+  function icon(name, opts) {
+    opts = opts || {};
+    const inner = ICONS[name] || '';
+    const svg = '<svg viewBox="0 -960 960 960" width="1em" height="1em" fill="currentColor" '
+      + 'aria-hidden="true" focusable="false">' + inner + '</svg>';
+    const e = h('span', { class: 'material-symbols-rounded' + (opts.cls ? ' ' + opts.cls : ''), html: svg });
+    if (opts.size != null) e.style.fontSize = typeof opts.size === 'number' ? opts.size + 'px' : opts.size;
+    return e;
+  }
+
   /* ---- zvuky (Web Audio, bez externích souborů) ---- */
   let actx = null;
   function ctx() {
@@ -126,7 +139,7 @@
     const pad = h('div', { class: 'numpad' });
     const keys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', 'back', '0', 'enter'];
     keys.forEach(function (k) {
-      const label = k === 'back' ? '⌫' : k === 'enter' ? '✓' : k;
+      const label = k === 'back' ? icon('backspace') : k === 'enter' ? icon('check') : k;
       const extra = k === 'enter' ? ' key-enter' : k === 'back' ? ' key-back' : '';
       pad.appendChild(h('button', {
         class: 'key' + extra, type: 'button',
@@ -143,7 +156,7 @@
     sound(ok ? 'correct' : 'wrong');
     vibrate(ok ? 30 : [60, 40, 60]);
     const card = h('div', { class: 'fb ' + (ok ? 'fb-ok' : 'fb-no') },
-      h('div', { class: 'fb-icon' }, ok ? '✓' : '✗'),
+      h('div', { class: 'fb-icon' }, icon(ok ? 'check_circle' : 'cancel')),
       h('div', { class: 'fb-msg' }, msg || (ok ? 'Správně!' : 'Chyba')),
       sub ? h('div', { class: 'fb-sub' }, sub) : null
     );
@@ -164,7 +177,8 @@
   /* ---- hlavička obrazovky s tlačítkem zpět ---- */
   function screenHeader(title, subtitle) {
     return h('div', { class: 'scr-head' },
-      h('button', { class: 'back-btn', onclick: function () { BILLA.app.go('home'); } }, '‹ Zpět'),
+      h('button', { class: 'back-btn', onclick: function () { BILLA.app.go('home'); } },
+        icon('chevron_left', { size: 20 }), 'Zpět'),
       h('div', { class: 'scr-title' }, h('h2', null, title), subtitle ? h('p', null, subtitle) : null)
     );
   }
@@ -189,7 +203,7 @@
   }
 
   BILLA.ui = {
-    h, clear, sound, vibrate, denomEl, breakdownRow, pileRow,
+    h, clear, icon, sound, vibrate, denomEl, breakdownRow, pileRow,
     numpad, feedback, toast, screenHeader, difficultyPicker
   };
 })(window.BILLA = window.BILLA || {});

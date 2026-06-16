@@ -1,13 +1,16 @@
 /* Service worker — offline cache (app shell) */
-const CACHE = 'billa-trener-v3';
+const CACHE = 'billa-trener-v4';
 const ASSETS = [
   './',
   'index.html',
   'manifest.json',
   'css/styles.css',
   'icons/icon.svg',
+  'assets/billa-logo-white.svg',
+  'assets/billa-logo-green.svg',
   'js/money.js',
   'js/data.js',
+  'js/icons.js',
   'js/storage.js',
   'js/ui.js',
   'js/games/change.js',

@@ -8,11 +8,11 @@
   const root = document.getElementById('app');
 
   const MODES = [
-    { key: 'change',    icon: '💸', title: 'Vracení peněz',    desc: 'Spočítej a naskládej drobné', tag: 'NEJDŮLEŽITĚJŠÍ' },
-    { key: 'rounding',  icon: '🔢', title: 'Zaokrouhlování',   desc: 'Hotovost vs. karta, rychlovka' },
-    { key: 'till',      icon: '🧮', title: 'Počítání zásuvky', desc: 'Sečti pokladnu na konci směny' },
-    { key: 'pos',       icon: '🛒', title: 'Plná pokladna',    desc: 'Celý nákup od skenu po platbu' },
-    { key: 'scenarios', icon: '❓', title: 'Situace',          desc: 'Jak reagovat u pokladny' }
+    { key: 'change',    icon: 'payments',                title: 'Vracení peněz',    desc: 'Spočítej a naskládej drobné', tag: 'NEJDŮLEŽITĚJŠÍ' },
+    { key: 'rounding',  icon: 'calculate',               title: 'Zaokrouhlování',   desc: 'Hotovost vs. karta, rychlovka' },
+    { key: 'till',      icon: 'account_balance_wallet',  title: 'Počítání zásuvky', desc: 'Sečti pokladnu na konci směny' },
+    { key: 'pos',       icon: 'shopping_cart',           title: 'Plná pokladna',    desc: 'Celý nákup od skenu po platbu' },
+    { key: 'scenarios', icon: 'quiz',                    title: 'Situace',          desc: 'Jak reagovat u pokladny' }
   ];
 
   function go(name) {
@@ -28,15 +28,17 @@
     const s = store.state;
 
     root.appendChild(h('div', { class: 'home-head' },
-      h('div', { class: 'logo' }, h('span', { class: 'logo-billa' }, 'BILLA'),
+      h('div', { class: 'logo' },
+        h('img', { class: 'logo-billa', src: 'assets/billa-logo-white.svg', alt: 'BILLA', draggable: 'false' }),
         h('span', { class: 'logo-sub' }, 'pokladní trenažér')),
-      h('button', { class: 'gear', onclick: function () { go('settings'); } }, '⚙️')
+      h('button', { class: 'gear', 'aria-label': 'Nastavení', onclick: function () { go('settings'); } }, ui.icon('settings'))
     ));
 
     // přehled bodů
     root.appendChild(h('div', { class: 'score-strip' },
       h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(s.points)), h('div', { class: 'score-lab' }, 'bodů')),
-      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(bestStreakAll())), h('div', { class: 'score-lab' }, 'série 🔥')),
+      h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, String(bestStreakAll())),
+        h('div', { class: 'score-lab' }, 'série ', ui.icon('local_fire_department', { size: 15, fill: true }))),
       h('div', { class: 'score-box' }, h('div', { class: 'score-num' }, totalPlays() + '×'), h('div', { class: 'score-lab' }, 'zahráno'))
     ));
 
@@ -44,18 +46,18 @@
     MODES.forEach(function (m) {
       const acc = store.accuracy(m.key);
       list.appendChild(h('button', { class: 'mode-card', onclick: function () { go(m.key); } },
-        h('div', { class: 'mode-icon' }, m.icon),
+        h('div', { class: 'mode-icon' }, ui.icon(m.icon)),
         h('div', { class: 'mode-body' },
           h('div', { class: 'mode-title' }, m.title, m.tag ? h('span', { class: 'mode-tag' }, m.tag) : null),
           h('div', { class: 'mode-desc' }, m.desc)),
-        h('div', { class: 'mode-meta' }, acc != null ? acc + '%' : '›')
+        h('div', { class: 'mode-meta' }, acc != null ? acc + '%' : ui.icon('chevron_right'))
       ));
     });
     root.appendChild(list);
 
     root.appendChild(h('div', { class: 'home-foot' },
       'Tip: nejdřív si projeď ', h('b', null, 'Situace'), ', pak piluj ', h('b', null, 'Vracení peněz'),
-      '. Appku si můžeš přidat na plochu telefonu a trénovat offline. 💪'));
+      '. Appku si můžeš přidat na plochu telefonu a trénovat offline.'));
   }
 
   function bestStreakAll() {

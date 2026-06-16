@@ -37,7 +37,8 @@
     const stat = store.modeStats(MODE);
     root.appendChild(h('div', { class: 'play-bar' },
       ui.difficultyPicker(function () { next(); }),
-      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)), ' 🔥')
+      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)),
+        ui.icon('local_fire_department', { fill: true, cls: 'streak-fire' }))
     ));
 
     const card = h('div', { class: 'card stage' });

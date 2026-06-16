@@ -44,7 +44,8 @@
     const stat = store.modeStats(MODE);
     root.appendChild(h('div', { class: 'play-bar' },
       h('div', { class: 'hint-chip' }, 'Hotovost → celé Kč · Karta → přesně'),
-      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)), ' 🔥')
+      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)),
+        ui.icon('local_fire_department', { fill: true, cls: 'streak-fire' }))
     ));
 
     const card = h('div', { class: 'card stage' });
@@ -59,7 +60,8 @@
       round = generate(); locked = false;
       ui.clear(card);
       card.appendChild(h('div', { class: 'pay-badge ' + (round.card ? 'card' : 'cash') },
-        round.card ? '💳 Platba KARTOU' : '💵 Platba HOTOVĚ'));
+        ui.icon(round.card ? 'credit_card' : 'payments'),
+        round.card ? 'Platba KARTOU' : 'Platba HOTOVĚ'));
       card.appendChild(h('div', { class: 'q center' }, 'Na účtence je ', h('b', null, money.formatKc(round.total, { decimals: 2 }))));
       card.appendChild(h('div', { class: 'q center small' }, 'Kolik zákazník zaplatí?'));
 

@@ -45,7 +45,7 @@
     const receipt = h('div', { class: 'receipt' });
     const totals = h('div', { class: 'totals' });
     const leftCol = h('div', { class: 'pos-left' },
-      h('div', { class: 'receipt-head' }, h('span', null, '🧾 Účtenka'),
+      h('div', { class: 'receipt-head' }, h('span', null, ui.icon('receipt_long'), 'Účtenka'),
         h('button', { class: 'mini-btn', onclick: clearCart }, 'Nový nákup')),
       receipt, totals
     );
@@ -54,9 +54,9 @@
     const grid = h('div', { class: 'prod-grid' });
     buildGrid();
     const actions = h('div', { class: 'pos-actions' },
-      h('button', { class: 'btn klub', id: 'klubBtn', onclick: toggleKlub }, '⭐ BILLA Klub'),
-      h('button', { class: 'btn ghost', onclick: returnDeposit }, '♻️ Vrátit zálohu'),
-      h('button', { class: 'btn primary pay', onclick: startPayment }, '💰 Zaplatit')
+      h('button', { class: 'btn klub', id: 'klubBtn', onclick: toggleKlub }, ui.icon('loyalty'), 'BILLA Klub'),
+      h('button', { class: 'btn ghost', onclick: returnDeposit }, ui.icon('recycling'), 'Vrátit zálohu'),
+      h('button', { class: 'btn primary pay', onclick: startPayment }, ui.icon('payments'), 'Zaplatit')
     );
     const rightCol = h('div', { class: 'pos-right' }, grid, actions);
 
@@ -156,7 +156,7 @@
         val.textContent = '− ' + money.formatKc(c * DEPOSIT);
       }
       const content = h('div', null,
-        h('div', { class: 'modal-title' }, '♻️ Výkup vratných obalů'),
+        h('div', { class: 'modal-title' }, ui.icon('recycling'), 'Výkup vratných obalů'),
         h('div', { class: 'muted center' }, 'Záloha ' + money.formatKc(DEPOSIT) + ' / ks · zadej počet'),
         disp, val,
         ui.numpad(function (k) {
@@ -233,7 +233,7 @@
       // ~30 % zákazník vypadá mladě → správně je NEPRODAT
       const looksYoung = Math.random() < 0.3;
       const content = h('div', null,
-        h('div', { class: 'modal-title' }, '🔞 Kontrola věku'),
+        h('div', { class: 'modal-title' }, ui.icon('verified_user'), 'Kontrola věku'),
         h('div', { class: 'age-face' }, looksYoung ? '🧑' : '🧔'),
         h('div', { class: 'center' }, 'Nákup obsahuje alkohol/tabák. Zákazník '
           + (looksYoung ? 'vypadá velmi mladě a NEMÁ u sebe doklad.' : 'předložil doklad, je mu prokazatelně 18+.')),
@@ -269,9 +269,9 @@
         h('div', { class: 'modal-title' }, 'Platba ' + money.formatKc(calc.exact / 100, { decimals: 2 })),
         h('div', { class: 'pay-choice' },
           h('button', { class: 'btn pay-cash', onclick: function () { m.close(); payCash(); } },
-            '💵 Hotově', h('small', null, money.formatKc(calc.cash / 100) + ' (zaokr.)')),
+            ui.icon('payments'), 'Hotově', h('small', null, money.formatKc(calc.cash / 100) + ' (zaokr.)')),
           h('button', { class: 'btn pay-card', onclick: function () { m.close(); payCard(); } },
-            '💳 Kartou', h('small', null, money.formatKc(calc.exact / 100, { decimals: 2 }) + ' (přesně)'))
+            ui.icon('credit_card'), 'Kartou', h('small', null, money.formatKc(calc.exact / 100, { decimals: 2 }) + ' (přesně)'))
         )
       );
       const m = modal(content);
@@ -342,7 +342,7 @@
     function payCard() {
       const status = h('div', { class: 'term-status' }, 'Přiložte / vložte kartu…');
       const content = h('div', null,
-        h('div', { class: 'modal-title' }, '💳 Platební terminál'),
+        h('div', { class: 'modal-title' }, ui.icon('credit_card'), 'Platební terminál'),
         h('div', { class: 'terminal' }, h('div', { class: 'term-amt' }, money.formatKc(calc.exact / 100, { decimals: 2 })), status)
       );
       const m = modal(content, { dismissable: false });
@@ -351,14 +351,16 @@
       setTimeout(function () {
         const declined = Math.random() < 0.12;
         if (declined) {
-          status.textContent = '✗ ZAMÍTNUTO';
+          status.textContent = '';
+          status.append(ui.icon('cancel'), 'ZAMÍTNUTO');
           status.classList.add('declined');
           const acts = h('div', { class: 'age-btns' },
             h('button', { class: 'btn ghost', onclick: function () { m.close(); payCard(); } }, 'Zkusit znovu'),
             h('button', { class: 'btn primary', onclick: function () { m.close(); payCash(); } }, 'Platit hotově'));
           m.box.appendChild(acts);
         } else {
-          status.textContent = '✓ SCHVÁLENO';
+          status.textContent = '';
+          status.append(ui.icon('check_circle'), 'SCHVÁLENO');
           status.classList.add('approved');
           ui.sound('cash');
           setTimeout(function () { m.close(); finishTx(true, 0, null, null, 'kartou'); }, 900);
@@ -375,7 +377,7 @@
       store.record(MODE, ok, ok ? pts : 0);
 
       const content = h('div', null,
-        h('div', { class: 'modal-title' }, ok ? '🎉 Hotovo' : '⚠️ Dokončeno s chybou'),
+        h('div', { class: 'modal-title' }, ui.icon(ok ? 'celebration' : 'warning'), ok ? 'Hotovo' : 'Dokončeno s chybou'),
         h('div', { class: 'sum-receipt' },
           h('div', { class: 'trow grand' }, h('span', null, 'Zaplaceno ' + how), h('span', null,
             money.formatKc((how === 'hotově' ? cashTotal : calc.exact / 100), { decimals: how === 'hotově' ? 0 : 2 }))),

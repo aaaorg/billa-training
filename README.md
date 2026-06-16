@@ -37,15 +37,28 @@ Když je appka hostovaná (server / web), otevři ji v prohlížeči telefonu a 
 Stačí nahrát celou složku na jakýkoliv statický hosting (žádný build, žádné závislosti).
 Vejde se i do Azure Blob `$web` apod.
 
+## Vzhled / design
+Appka je nově sladěná s **BILLA Design System** (claude.ai/design):
+- **žlutá `#FFD400`** = primární (hlavička, hlavní CTA), **tmavě zelená `#00614A`** = sekundární
+  (BILLA klub, potvrzení, ikony), **červená `#E30613`** jen pro ceny/slevy a chyby;
+- písmo **Mulish** (náhrada firemního fontu, z Google Fonts; offline degraduje na systémové);
+- ikony **Material Symbols Rounded** vložené jako **inline SVG** (`js/icons.js`) – fungují i offline,
+  žádná závislost na CDN;
+- bílé karty s jemným okrajem a měkkým stínem, kulaté zelené ikony režimů, žlutá BILLA hlavička s bílým logem.
+
+Tokeny (barvy, stíny, poloměry, mezery) jsou v `:root` v `css/styles.css`.
+
 ## Struktura
 ```
 index.html          # vstupní bod
 manifest.json, sw.js# PWA (instalace + offline)
-css/styles.css      # styly
+css/styles.css      # styly + design tokeny (:root)
+assets/billa-logo-*.svg # BILLA wordmark (bílá na žluté/zelené, zelená na světlé)
 js/money.js         # logika peněz (zaokrouhlování, rozklad na nominály) – jádro
 js/data.js          # zboží, vzhled mincí, situační kvíz
+js/icons.js         # registr vložených SVG ikon (Material Symbols Rounded)
 js/storage.js       # ukládání postupu
-js/ui.js            # DOM, zvuky, vizuální mince/bankovky, klávesnice
+js/ui.js            # DOM, ikony, zvuky, vizuální mince/bankovky, klávesnice
 js/games/*.js       # jednotlivé tréninkové režimy
 js/app.js           # router + domovská obrazovka
 ```
@@ -59,4 +72,7 @@ js/app.js           # router + domovská obrazovka
 ## Zdroje obrázků a licence
 - Obrázky bankovek a mincí v `assets/money/` jsou reálné skeny z **Wikimedia Commons**. Staženy skripty v `scripts/`.
 - Reprodukce platidel jsou použité výhradně pro **vzdělávací/tréninkový** účel.
-- Licence `LICENSE` se vztahuje na **kód**; obrázky si ponechávají vlastní licence dle zdroje na Wikimedia Commons.
+- Ikony jsou **Material Symbols Rounded** od Google (licence **Apache-2.0**), vložené jako inline SVG v `js/icons.js`.
+- Písmo **Mulish** je z Google Fonts (licence **OFL**) jako náhrada firemního fontu BILLA.
+- **BILLA wordmark** (`assets/billa-logo-*.svg`) je ochranná známka BILLA; použit výhradně pro vzdělávací/tréninkový účel.
+- Licence `LICENSE` se vztahuje na **kód**; obrázky, písma a logo si ponechávají vlastní licence dle zdroje.

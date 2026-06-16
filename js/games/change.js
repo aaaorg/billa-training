@@ -65,7 +65,8 @@
     const stat = store.modeStats(MODE);
     root.appendChild(h('div', { class: 'play-bar' },
       ui.difficultyPicker(function () { newRound(); }),
-      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)), ' 🔥')
+      h('div', { class: 'streak' }, h('span', { class: 'streak-num', id: 'streak' }, String(stat.streak)),
+        ui.icon('local_fire_department', { fill: true, cls: 'streak-fire' }))
     ));
 
     const card = h('div', { class: 'card stage' });
@@ -94,7 +95,7 @@
     /* --- 1) spočítej přijatou hotovost --- */
     function drawCount() {
       card.appendChild(registerPanel());
-      card.appendChild(h('div', { class: 'pile-label' }, '👛 Zákazník ti podal — spočítej kusy:'));
+      card.appendChild(h('div', { class: 'pile-label' }, ui.icon('account_balance_wallet'), 'Zákazník ti podal — spočítej kusy:'));
       card.appendChild(h('div', { class: 'pile' }, ui.pileRow(round.pile, { size: 'md' })));
       card.appendChild(h('div', { class: 'q' }, 'Spočítej a zadej, kolik ti dal:'));
       const disp = h('div', { class: 'big-input' }, '0 Kč');
@@ -179,7 +180,7 @@
     /* --- shrnutí kola --- */
     function drawDone() {
       card.appendChild(h('div', { class: 'done ok' },
-        h('div', { class: 'done-ico' }, '🧾'),
+        h('div', { class: 'done-ico' }, ui.icon('receipt_long')),
         h('div', { class: 'done-txt' },
           h('div', { class: 'q' }, 'Dal ', h('b', null, money.formatKc(round.tendered)), ', platil ', h('b', null, money.formatKc(round.total))),
           h('div', { class: 'mini-lab' }, round.change > 0 ? 'Správně vrátit ' + money.formatKc(round.change) + ' nejjednodušeji:' : 'Přesná částka — nevrací se nic.'),
