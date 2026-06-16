@@ -132,11 +132,15 @@ b, strong { font-weight: 800; }
   border-radius: var(--radius-md); box-shadow: var(--shadow-header);
   padding: 16px 18px; margin-bottom: 18px;
 }
-.logo { display: flex; flex-direction: column; gap: 6px; line-height: 1; min-width: 0; }
-.logo-billa { display: block; height: 30px; width: auto; }
+.logo { display: flex; flex: 1; flex-direction: row; align-items: center; gap: 14px; line-height: 1; min-width: 0; }
+.logo-billa { display: block; height: 42px; width: auto; flex: none; }
 .logo-sub {
-  font-size: .8rem; font-weight: 700; letter-spacing: .02em;
-  color: var(--grey-800); text-transform: uppercase;
+  font-size: .82rem; font-weight: 800; letter-spacing: .02em; line-height: 1.2;
+  color: var(--grey-800); text-transform: uppercase; min-width: 0;
+  /* ořež řádkový box na výšku verzálek, aby align-items:center centroval
+     samotná velká písmena (ne em-box s prázdným místem pod účařím).
+     Ve starších prohlížečích se neuplatní a centruje se jako dřív. */
+  text-box: trim-both cap alphabetic;
 }
 .gear {
   flex: none; width: 46px; height: 46px; border-radius: 50%;

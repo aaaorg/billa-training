@@ -30,7 +30,7 @@
     root.appendChild(h('div', { class: 'home-head' },
       h('div', { class: 'logo' },
         h('img', { class: 'logo-billa', src: 'assets/billa-logo-white.svg', alt: 'BILLA', draggable: 'false' }),
-        h('span', { class: 'logo-sub' }, 'pokladní trenažér')),
+        h('span', { class: 'logo-sub' }, 'Neoficiální tréninkový program')),
       h('button', { class: 'gear', 'aria-label': 'Nastavení', onclick: function () { go('settings'); } }, ui.icon('settings'))
     ));
 
